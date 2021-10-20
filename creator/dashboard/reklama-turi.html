@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Account</title>
+    <title>Reklama turi</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../image/logo.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="../../Service/http-service.js"></script>
     <script src="../../service/authCheck.js"></script>
-    <script src="../service/user-service.js"></script>
+    <script src="../service/reklama-turi-service.js"></script>
     <script src="../info/info.js"></script>
 </head>
 
@@ -21,36 +21,21 @@
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="createAdminModal">
+    <div class="modal" id="createReklamaTuriModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Admin qo'shish</h4>
+                    <h4 class="modal-title">Reklama turi qo'shish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="createAdminForm">
-                        <div class="form-group col-12 col-md-6">
-                            <label for="username">Usernameni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="username"
-                                placeholder="Usernameni kiriting" name="username" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="name">Ismni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="name"
-                                placeholder="Ismni kiriting" name="name" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="number">Nomerni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="number"
-                                placeholder="Nomerni kiriting" name="number" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="password">Parolni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="password"
-                                placeholder="Parolni kiriting" name="password" required>
+                    <form name="createReklamaTuriForm">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="nomi">Nomi kiriting:</label>
+                            <input type="text" oninput="reklamaTuriYozish()" class="form-control" id="nomi"
+                                placeholder="Nomini kiriting" name="nomi" required>
                         </div>
                     </form>
                 </div>
@@ -59,7 +44,7 @@
                 -->
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" id="adminQushish" disabled class="btn btn-primary" onclick="adminQushish()">
+                    <button type="button" id="reklamaTuriQushish" disabled class="btn btn-primary" onclick="reklamaTuriQushish()">
                         <i class="fa fa-plus" aria-hidden="true"></i> Qo'shish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -73,36 +58,21 @@
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="updateAdminModal">
+    <div class="modal" id="updateReklamaTuriModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Admin o'zgartirish</h4>
+                    <h4 class="modal-title">Reklama Turi o'zgartirish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="updateAdminForm">
-                        <div class="form-group col-12 col-md-6">
-                            <label for="usernameUpdate">Usernameni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="usernameUpdate"
-                                placeholder="Usernameni kiriting" name="usernameUpdate" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="nameUpdate">Ismni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="nameUpdate"
-                                placeholder="Ismni kiriting" name="nameUpdate" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="numberUpdate">Nomerni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="numberUpdate"
-                                placeholder="Nomerni kiriting" name="numberUpdate" required>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label for="passwordUpdate">Parolni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="passwordUpdate"
-                                placeholder="Parolni kiriting" name="passwordUpdate" required>
+                    <form name="updateReklamaTuriForm">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="nomiUpdate">Nomini kiriting:</label>
+                            <input type="text" oninput="reklamaTuriYozishUpdate()" class="form-control" id="nomiUpdate"
+                                placeholder="Nomini kiriting" name="nomiUpdate" required>
                         </div>
                     </form>
                 </div>
@@ -110,8 +80,8 @@
                     Mijoz formasi tugadi
                 -->
                 <!-- Modal footer -->
-                <div class="modal-footer" id="buttonAdminUpdate">
-                    <button type="button" id="adminUpdate" disabled class="btn btn-primary" onclick="adminUpdate()">
+                <div class="modal-footer" id="buttonReklamaTuriUpdate">
+                    <button type="button" id="reklamaTuriUpdate" disabled class="btn btn-primary" onclick="reklamaTuriUpdate()">
                         <i class="fa fa-plus" aria-hidden="true"></i> O'zgartirish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -189,10 +159,10 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-12">
-                        <h4 class="page-title">Accountlar jadvali</h4>
+                        <h4 class="page-title">Reklama turlari jadvali</h4>
                         <ol class="breadcrumb">
                             <li><a href="#">Statistika</a></li>
-                            <li class="active">Accountlar jadvali</li>
+                            <li class="active">Reklama turlari jadvali</li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -201,25 +171,17 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3>Accountlar jadvali</h3>
-                            <p class="text-muted"><code>Poliya</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" data-target="#createAdminModal"
+                            <h3>Reklama turlari jadvali</h3>
+                            <p class="text-muted"><code>Reklama Turi</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" data-target="#createReklamaTuriModal"
                                 data-toggle="modal" style="background-color:green;color: white;"
-                                class="btn btn-sm rollAdminQushish">Admin qo'shish</button>
-                            &nbsp;&nbsp;&nbsp; Sanani tanlang:
-                            <input type="date" id="sana" name="trip-start"  onchange="userSana()">
-                            &nbsp;&nbsp;&nbsp;Qidiriyotgan username: 
-                            <input type="text" placeholder="Qidiruv..." id="user-like">
-                            <button onclick="qidir()">Qidir</button>
+                                class="btn btn-sm rollReklamaTuriQushish">Reklama turi qo'shish</button>
                             </p>
                             
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Number</th>
-                                        <th scope="col">Qo'shilgan vaqti</th>
+                                        <th scope="col">Nomi</th>
                                         <th scope="col">Status</th>
                                         <th class="rollUpdate" scope="col">O'zgartirish</th>
                                         <th class="rollRemove" scope="col">Faol</th>
@@ -250,7 +212,14 @@
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/myadmin.js"></script>
-    <script src="../account/js/account.js"></script>
+    <script src="../reklama-turi/js/reklama-turi.js"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+

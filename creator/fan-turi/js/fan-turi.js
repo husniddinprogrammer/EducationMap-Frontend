@@ -115,8 +115,16 @@ function fanTuriYozishUpdate() {
 Status o'zgartirish boshlandi
 */
 function removePost(id){
-  fanTuriService.getStatus(id,console.log("to'g'ri"),console.log("xato"))
+  fanTuriService.getStatus(id,location.reload(),console.log("xato"))
 }
 /**
  Status o'zgartirish
  */
+
+
+
+
+
+
+
+

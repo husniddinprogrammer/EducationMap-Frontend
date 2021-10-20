@@ -133,7 +133,7 @@ function adminYozishUpdate() {
 Status o'zgartirish boshlandi
 */
 function removePost(id){
-  userService.getStatus(id,console.log("to'g'ri"),console.log("xato"))
+  userService.getStatus(id,location.reload(),console.log("xato"))
 }
 /**
  Status o'zgartirish

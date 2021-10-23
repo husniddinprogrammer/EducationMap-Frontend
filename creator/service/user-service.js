@@ -3,6 +3,9 @@ var userService = {
     getAll: function (success, error) {
         return http.get(userApi+"user/", success, error);
     },
+    getSelected: function (success, error) {
+        return http.get(userApi+"user/selected/", success, error);
+    }, 
     getSana: function (sana,success, error) {
         return http.get(userApi+"user/sana/"+sana, success, error);
     },

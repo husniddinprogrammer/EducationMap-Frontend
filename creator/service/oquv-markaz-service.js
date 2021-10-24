@@ -3,6 +3,9 @@ var oquvMarkazService = {
     getAll: function (success, error) {
         return http.get(oquvMarkazApi+"/", success, error);
     },
+    getAllSelected: function (success, error) {
+        return http.get(oquvMarkazApi+"/selected", success, error);
+    },
     getById: function (id, success, error) {
         return http.get(oquvMarkazApi +"/"+id, success, error);
     },

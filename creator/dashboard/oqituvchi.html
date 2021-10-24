@@ -5,53 +5,77 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Account</title>
+    <title>O'qituvchi</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../image/logo.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="../../Service/http-service.js"></script>
     <script src="../../service/authCheck.js"></script>
-    <script src="../service/user-service.js"></script>
+    <script src="../service/oqituvchi-service.js"></script>
+    <script src="../service/oquv-markaz-service.js"></script>
+    <script src="../service/fan-turi-service.js"></script>
     <script src="../info/info.js"></script>
 </head>
 
 <body onload="yuklash()">
-    
+
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="createAdminModal">
+    <div class="modal" id="createOqituvchiModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Admin qo'shish</h4>
+                    <h4 class="modal-title">O'qituvchi qo'shish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="createAdminForm">
+                    <form name="createOqituvchiForm">
                         <div class="form-group col-12 col-md-6">
-                            <label for="username">Usernameni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="username"
-                                placeholder="Usernameni kiriting" name="username" required>
+                            <label for="ism">Ismini kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozish()" class="form-control" id="ism"
+                                placeholder="Ismini kiriting" name="ism" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="name">Ismni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="name"
-                                placeholder="Ismni kiriting" name="name" required>
+                            <label for="familiya">Familiyani kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozish()" class="form-control" id="familiya"
+                                placeholder="Familiyani kiriting" name="familiya" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="number">Nomerni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="number"
-                                placeholder="Nomerni kiriting" name="number" required>
+                            <label for="nomer">Nomerni kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozish()" class="form-control" id="nomer"
+                                placeholder="Nomerni kiriting" name="nomer" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="password">Parolni kiriting:</label>
-                            <input type="text" oninput="adminYozish()" class="form-control" id="password"
-                                placeholder="Parolni kiriting" name="password" required>
+                            <label for="tarjiba">Tajribani kiriting:</label>
+                            <input type="number" oninput="oqituvchiYozish()" class="form-control" id="tarjiba"
+                                placeholder="Tajribani kiriting" name="tajriba" required>
                         </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="togilganYili">Tugilgan yili kiriting:</label>
+                            <input type="number" oninput="oqituvchiYozish()" class="form-control" id="togilganYili"
+                                placeholder="Faqat yilini kiriting" name="togilganYili" required>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="qisqaMalumot">Qisqa malumot kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozish()" class="form-control" id="qisqaMalumot"
+                                placeholder="Qisqa malumot kiriting" name="qisqaMalumot" required>
+                        </div>Fanlarni tanlang:
+                        <label for="fan1">1-Fan:</label>
+                        <select name="fan1" id="fan1">
+                        </select>
+                        <label for="fan2">2-Fan:</label>
+                        <select name="fan2" id="fan2">
+                        </select>
+                        <label for="fan3">3-Fan:</label>
+                        <select name="fan3" id="fan3">
+                        </select><br>
+                        <label for="oquvMarkazSelected">Oquv Markazni tanlang:</label>
+                        <select name="oquvMarkazSelected" id="oquvMarkazSelected">
+                        </select>
                     </form>
                 </div>
                 <!--
@@ -59,7 +83,8 @@
                 -->
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" id="adminQushish" disabled class="btn btn-primary" onclick="adminQushish()">
+                    <button type="button" id="oqituvchiQushish" disabled class="btn btn-primary"
+                        onclick="oqituvchiQushish()">
                         <i class="fa fa-plus" aria-hidden="true"></i> Qo'shish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -69,49 +94,74 @@
     </div>
     <!--
         Admin qushish tugadi
-    -->   
+    -->
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="updateAdminModal">
+    <div class="modal" id="updateOqituvchiModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Admin o'zgartirish</h4>
+                    <h4 class="modal-title">O'qituvchi o'zgartirish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="updateAdminForm">
+                    <form name="updateOqituvchiForm">
                         <div class="form-group col-12 col-md-6">
-                            <label for="usernameUpdate">Usernameni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="usernameUpdate"
-                                placeholder="Usernameni kiriting" name="usernameUpdate" required>
+                            <label for="ismUpdate">Ismini kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozishUpdate()" class="form-control" id="ismUpdate"
+                                placeholder="Ismini kiriting" name="ismUpdate" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="nameUpdate">Ismni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="nameUpdate"
-                                placeholder="Ismni kiriting" name="nameUpdate" required>
+                            <label for="familiyaUpdate">Familiyani kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozishUpdate()" class="form-control"
+                                id="familiyaUpdate" placeholder="Familiyani kiriting" name="familiyaUpdate" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="numberUpdate">Nomerni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="numberUpdate"
-                                placeholder="Nomerni kiriting" name="numberUpdate" required>
+                            <label for="nomerUpdate">Nomerni kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozishUpdate()" class="form-control" id="nomerUpdate"
+                                placeholder="Nomerni kiriting" name="nomerUpdate" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="passwordUpdate">Parolni kiriting:</label>
-                            <input type="text" oninput="adminYozishUpdate()" class="form-control" id="passwordUpdate"
-                                placeholder="Parolni kiriting" name="passwordUpdate" required>
+                            <label for="tarjibaUpdate">Tajribani kiriting:</label>
+                            <input type="number" oninput="oqituvchiYozishUpdate()" class="form-control"
+                                id="tarjibaUpdate" placeholder="Tajribani kiriting" name="tajribaUpdate" required>
                         </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="togilganYiliUpdate">Tugilgan yili kiriting:</label>
+                            <input type="number" oninput="oqituvchiYozishUpdate()" class="form-control"
+                                id="togilganYiliUpdate" placeholder="Faqat yilini kiriting" name="togilganYiliUpdate"
+                                required>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            <label for="qisqaMalumotUpdate">Qisqa malumot kiriting:</label>
+                            <input type="text" oninput="oqituvchiYozishUpdate()" class="form-control"
+                                id="qisqaMalumotUpdate" placeholder="Qisqa malumot kiriting" name="qisqaMalumotUpdate"
+                                required>
+                        </div>Fanlarni tanlang:
+                        <label for="fan1Update">1-Fan:</label>
+                        <select name="fan1Update" id="fan1Update">
+                        </select>
+                        <label for="fan2Update">2-Fan:</label>
+                        <select name="fan2Update" id="fan2Update">
+                        </select>
+                        <label for="fan3Update">3-Fan:</label>
+                        <select name="fan3Update" id="fan3Update">
+                        </select><br>
+                        <label for="oquvMarkazSelectedUpdate">Oquv Markazni tanlang:</label>
+                        <select name="oquvMarkazSelectedUpdate" id="oquvMarkazSelectedUpdate">
+                        </select>
                     </form>
                 </div>
                 <!--
                     Mijoz formasi tugadi
                 -->
                 <!-- Modal footer -->
-                <div class="modal-footer" id="buttonAdminUpdate">
-                    <button type="button" id="adminUpdate" disabled class="btn btn-primary" onclick="adminUpdate()">
+                <div class="modal-footer" id="buttonOqituvchiUpdate">
+                    <button type="button" id="oqituvchiUpdate" disabled class="btn btn-primary"
+                        onclick="oqituvchiUpdate()">
                         <i class="fa fa-plus" aria-hidden="true"></i> O'zgartirish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -197,10 +247,10 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-12">
-                        <h4 class="page-title">Accountlar jadvali</h4>
+                        <h4 class="page-title">O'qituvchilari jadvali</h4>
                         <ol class="breadcrumb">
                             <li><a href="#">Statistika</a></li>
-                            <li class="active">Accountlar jadvali</li>
+                            <li class="active">O'qituvchilar jadvali</li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -209,26 +259,40 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3>Accountlar jadvali</h3>
-                            <p class="text-muted"><code>Poliya</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" data-target="#createAdminModal"
-                                data-toggle="modal" style="background-color:green;color: white;"
-                                class="btn btn-sm rollAdminQushish">Admin qo'shish</button>
-                            &nbsp;&nbsp;&nbsp; Sanani tanlang:
-                            <input type="date" id="sana" name="trip-start"  onchange="userSana()">
-                            &nbsp;&nbsp;&nbsp;Qidiriyotgan username: 
-                            <input type="text" placeholder="Qidiruv..." id="user-like">
-                            <button onclick="qidir()">Qidir</button>
+                            <h3>O'qituvchilar jadvali</h3>
+                            <p class="text-muted"><code>O'qituvchi</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" data-target="#createOqituvchiModal" data-toggle="modal"
+                                    style="background-color:green;color: white;"
+                                    class="btn btn-sm rollOqituvchiQushish">O'qituvchi qo'shish</button>
+                                Sanani tanlang:
+                                <input type="date" id="dateStart" name="trip-start">dan
+                                <input type="date" id="dateEnd" name="trip-start">gacha
+                                <label for="fanQidiruv">Fan turini tanlang:</label>
+                                <select name="fanQidiruv" id="fanQidiruv">
+                                </select>
+                                <button type="button"
+                                    style="background-color:rgb(6, 255, 255);color: rgb(255, 255, 255);"
+                                    class="btn btn-sm" onclick="qidirish()">Qidirish</button><br>
+                                <input type="text" id="ismQidirish">
+                                <button type="button"
+                                    style="background-color:rgb(6, 255, 255);color: rgb(255, 255, 255);"
+                                    class="btn btn-sm" onclick="qidirishNomi()">Qidirish</button><br>
                             </p>
-                            
+
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Number</th>
-                                        <th scope="col">Qo'shilgan vaqti</th>
+                                        <th scope="col">Ism</th>
+                                        <th scope="col">Familiya</th>
+                                        <th scope="col">Nomer</th>
+                                        <th scope="col">Tajriba</th>
+                                        <th scope="col">To'gilgan Yili</th>
+                                        <th scope="col">O'quvchilari Soni</th>
+                                        <th scope="col">Kurslari Soni</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">1-Fan</th>
+                                        <th scope="col">2-Fan</th>
+                                        <th scope="col">3-Fan</th>
                                         <th class="rollUpdate" scope="col">O'zgartirish</th>
                                         <th class="rollRemove" scope="col">Faol</th>
                                     </thead>
@@ -258,7 +322,7 @@
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/myadmin.js"></script>
-    <script src="../account/js/account.js"></script>
+    <script src="../oqituvchi/js/oqituvchi.js"></script>
 </body>
 
 </html>

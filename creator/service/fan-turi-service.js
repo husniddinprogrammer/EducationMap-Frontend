@@ -3,6 +3,9 @@ var fanTuriService = {
     getAll: function (success, error) {
         return http.get(fanTuriApi+"/", success, error);
     },
+    getAllSelected: function (success, error) {
+        return http.get(fanTuriApi+"/selected", success, error);
+    },
     getById: function (id, success, error) {
         return http.get(fanTuriApi +"/"+id, success, error);
     },

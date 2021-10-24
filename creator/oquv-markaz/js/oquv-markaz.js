@@ -78,7 +78,7 @@ Fan turi qushish tugadi
 */
 function oquvMarkazUpdate(id) {
   let form = document.forms['updateOquvMarkazForm'];
-  let check = {}
+  let check = {};
   let userId1={};
   let userId2={};
   check.id=id;

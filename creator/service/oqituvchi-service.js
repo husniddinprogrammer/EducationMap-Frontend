@@ -3,6 +3,9 @@ var oqituvchiService = {
     getAll: function (success, error) {
         return http.get(oqituvchiApi+"/", success, error);
     },
+    getAllSelected: function (success, error) {
+        return http.get(oqituvchiApi+"/selected", success, error);
+    },
     getAllQidiruvIsm: function (ism,success, error) {
         return http.get(oqituvchiApi+"/qidiruv-ism/"+ism, success, error);
     },

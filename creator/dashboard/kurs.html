@@ -5,14 +5,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hafta turi</title>
+    <title>Kurs</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../image/logo.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="../../Service/http-service.js"></script>
     <script src="../../service/authCheck.js"></script>
+    <script src="../service/kurs-service.js"></script>
     <script src="../service/hafta-turi-service.js"></script>
+    <script src="../service/faol-turi-service.js"></script>
+    <script src="../service/oqituvchi-service.js"></script>
+    <script src="../service/fan-turi-service.js"></script>
+    <script src="../service/oquv-markaz-service.js"></script>
     <script src="../info/info.js"></script>
 </head>
 
@@ -21,27 +26,63 @@
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="createHaftaTuriModal">
+    <div class="modal" id="createKursModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Hafta turi qo'shish</h4>
+                    <h4 class="modal-title">Kurs qo'shish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="createHaftaTuriForm">
+                    <form name="createKursForm">
                         <div class="form-group col-12 col-md-6">
                             <label for="nomi">Nomi kiriting:</label>
-                            <input type="text" oninput="haftaTuriYozish()" class="form-control" id="nomi"
+                            <input type="text" oninput="kursYozish()" class="form-control" id="nomi"
                                 placeholder="Nomini kiriting" name="nomi" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="kunlar">Kunlarni kiriting:</label>
-                            <input type="text" oninput="haftaTuriYozish()" class="form-control" id="kunlar"
-                                placeholder="Kunlarni kiriting" name="kunlar" required>
+                            <label for="narxi">Narxini kiriting:</label>
+                            <input type="number" oninput="kursYozish()" class="form-control" id="narxi"
+                                placeholder="Narxini kiriting" name="narxi" required>
                         </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="maxSoni">O'quvchilar maksimal sonini kiriting:</label>
+                            <input type="number" oninput="kursYozish()" class="form-control" id="maxSoni"
+                                placeholder="Maksimal sonini kiriting" name="maxSoni" required>
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="soni">Hozirgi o'quvchilar sonini kiriting:</label>
+                            <input type="number" oninput="kursYozish()" class="form-control" id="soni"
+                                placeholder="Hozirgi o'quvchilar soni" name="soni" required>
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="qisqaMalumot">Qisqa malumot kiriting:</label>
+                            <input type="text" oninput="kursYozish()" class="form-control" id="qisqaMalumot"
+                                placeholder="Qisqa malumot kiriting" name="qisqaMalumot" required>
+                        </div>
+                        <label for="oqituvchiSelect">O'qituvchini tanlang:</label>
+                        <select name="oqituvchiSelect" id="oqituvchiSelect">
+                        </select>
+                        <label for="fanSelect">Fani tanlang:</label>
+                        <select name="fanSelect" id="fanSelect">
+                        </select>
+                        <label for="oquvMarkazSelect">O'quv Markazni tanlang:</label>
+                        <select name="oquvMarkazSelect" id="oquvMarkazSelect">
+                        </select>
+                        <label for="haftaTartibiTurSelect">Kun tartibini tanlang:</label>
+                        <select name="haftaTartibiTurSelect" id="haftaTartibiTurSelect">
+                        </select>
+                        <label for="startWorkSelect">Boshlanish vaqti:</label>
+                        <select name="startWorkSelect" id="startWorkSelect">
+                        </select>
+                        <label for="endWorkSelect">Tugash vaqti:</label>
+                        <select name="endWorkSelect" id="endWorkSelect">
+                        </select>
+                        <label for="faolTuriSelect">Faoligini tanlang:</label>
+                        <select name="faolTuriSelect" id="faolTuriSelect">
+                        </select>
                     </form>
                 </div>
                 <!--
@@ -49,7 +90,7 @@
                 -->
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" id="haftaTuriQushish" disabled class="btn btn-primary" onclick="haftaTuriQushish()">
+                    <button type="button" id="kursQushish" disabled class="btn btn-primary" onclick="kursQushish()">
                         <i class="fa fa-plus" aria-hidden="true"></i> Qo'shish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -63,35 +104,71 @@
     <!--
         Admin qushish boshlandi
     -->
-    <div class="modal" id="updateHaftaTuriModal">
+    <div class="modal" id="updateKursModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Hafta Turi o'zgartirish</h4>
+                    <h4 class="modal-title">Kurs o'zgartirish</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form name="updateHaftaTuriForm">
+                    <form name="updateKursForm">
                         <div class="form-group col-12 col-md-6">
-                            <label for="nomiUpdate">Nomini kiriting:</label>
-                            <input type="text" oninput="haftaTuriYozishUpdate()" class="form-control" id="nomiUpdate"
+                            <label for="nomiUpdate">Nomi kiriting:</label>
+                            <input type="text" oninput="kursYozishUpdate()" class="form-control" id="nomiUpdate"
                                 placeholder="Nomini kiriting" name="nomiUpdate" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
-                            <label for="kunlarUpdate">Kunlarni kiriting:</label>
-                            <input type="text" oninput="haftaTuriYozishUpdate()" class="form-control" id="kunlarUpdate"
-                                placeholder="Kunlarni kiriting" name="kunlarUpdate" required>
+                            <label for="narxiUpdate">Narxini kiriting:</label>
+                            <input type="number" oninput="kursYozishUpdate()" class="form-control" id="narxiUpdate"
+                                placeholder="Narxini kiriting" name="narxiUpdate" required>
                         </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="maxSoniUpdate">O'quvchilar maksimal sonini kiriting:</label>
+                            <input type="number" oninput="kursYozishUpdate()" class="form-control" id="maxSoniUpdate"
+                                placeholder="Maksimal sonini kiriting" name="maxSoniUpdate" required>
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="soniUpdate">Hozirgi o'quvchilar sonini kiriting:</label>
+                            <input type="number" oninput="kursYozishUpdate()" class="form-control" id="soniUpdate"
+                                placeholder="Hozirgi o'quvchilar soni" name="soniUpdate" required>
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="qisqaMalumotUpdate">Qisqa malumot kiriting:</label>
+                            <input type="text" oninput="kursYozishUpdate()" class="form-control" id="qisqaMalumotUpdate"
+                                placeholder="Qisqa malumot kiriting" name="qisqaMalumotUpdate" required>
+                        </div>
+                        <label for="oqituvchiSelectUpdate">O'qituvchini tanlang:</label>
+                        <select name="oqituvchiSelectUpdate" id="oqituvchiSelectUpdate">
+                        </select>
+                        <label for="fanSelectUpdate">Fani tanlang:</label>
+                        <select name="fanSelectUpdate" id="fanSelectUpdate">
+                        </select>
+                        <label for="oquvMarkazSelectUpdate">O'quv Markazni tanlang:</label>
+                        <select name="oquvMarkazSelectUpdate" id="oquvMarkazSelectUpdate">
+                        </select>
+                        <label for="haftaTartibiTurSelectUpdate">Kun tartibini tanlang:</label>
+                        <select name="haftaTartibiTurSelectUpdate" id="haftaTartibiTurSelectUpdate">
+                        </select>
+                        <label for="startWorkSelectUpdate">Boshlanish vaqti:</label>
+                        <select name="startWorkSelectUpdate" id="startWorkSelectUpdate">
+                        </select>
+                        <label for="endWorkSelectUpdate">Tugash vaqti:</label>
+                        <select name="endWorkSelectUpdate" id="endWorkSelectUpdate">
+                        </select>
+                        <label for="faolTuriSelectUpdate">Faoligini tanlang:</label>
+                        <select name="faolTuriSelectUpdate" id="faolTuriSelectUpdate">
+                        </select>
                     </form>
                 </div>
                 <!--
                     Mijoz formasi tugadi
                 -->
                 <!-- Modal footer -->
-                <div class="modal-footer" id="buttonHaftaTuriUpdate">
-                    <button type="button" id="haftaTuriUpdate" disabled class="btn btn-primary" onclick="haftaTuriUpdate()">
+                <div class="modal-footer" id="buttonKursUpdate">
+                    <button type="button" id="kursUpdate" disabled class="btn btn-primary" onclick="kursUpdate()">
                         <i class="fa fa-plus" aria-hidden="true"></i> O'zgartirish
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiqish</button>
@@ -181,10 +258,10 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-12">
-                        <h4 class="page-title">Hafta turlari jadvali</h4>
+                        <h4 class="page-title">Kurslar jadvali</h4>
                         <ol class="breadcrumb">
                             <li><a href="#">Statistika</a></li>
-                            <li class="active">Hafta turlari jadvali</li>
+                            <li class="active">Kurslar jadvali</li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -193,18 +270,43 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3>Hafta turlari jadvali</h3>
-                            <p class="text-muted"><code>Hafta Turi</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" data-target="#createHaftaTuriModal"
+                            <h3>Kurslar jadvali</h3>
+                            <p class="text-muted"><code>Kurs</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" data-target="#createKursModal"
                                 data-toggle="modal" style="background-color:green;color: white;"
-                                class="btn btn-sm rollHaftaTuriQushish">Hafta turi qo'shish</button>
+                                class="btn btn-sm rollKursQushish">Kurs qo'shish</button>
+                                Sanani tanlang:
+                                <input type="date" id="dateStart" name="trip-start">dan
+                                <input type="date" id="dateEnd" name="trip-start">gacha
+                                <label for="fanQidiruv">Fan turini tanlang:</label>
+                                <select name="fanQidiruv" id="fanQidiruv">
+                                </select>
+                                <label for="oqituvchiQidiruv">O'qituvchini tanlang:</label>
+                                <select name="oqituvchiQidiruv" id="oqituvchiQidiruv">
+                                </select>
+                                <label for="oquvMarkazQidiruv">O'quv Markazni tanlang:</label>
+                                <select name="oquvMarkazQidiruv" id="oquvMarkazQidiruv">
+                                </select>
+                                <button type="button"
+                                    style="background-color:rgb(6, 255, 255);color: rgb(255, 255, 255);"
+                                    class="btn btn-sm" onclick="qidirish()">Qidirish</button><br>
+                                <input type="text" id="nomiQidirish">
+                                <button type="button"
+                                    style="background-color:rgb(6, 255, 255);color: rgb(255, 255, 255);"
+                                    class="btn btn-sm" onclick="qidirishNomi()">Qidirish</button><br>
                             </p>
-                            
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <th scope="col">Nomi</th>
-                                        <th scope="col">Kunlar</th>
+                                        <th scope="col">O'qituvchi</th>
+                                        <th scope="col">Fan</th>
+                                        <th scope="col">Boshlanish vaqti</th>
+                                        <th scope="col">Tugash vaqti</th>
+                                        <th scope="col">Hafta Tartibi</th>
+                                        <th scope="col">Narxi</th>
+                                        <th scope="col">Soni</th>
+                                        <th scope="col">Faol</th>
                                         <th scope="col">Status</th>
                                         <th class="rollUpdate" scope="col">O'zgartirish</th>
                                         <th class="rollRemove" scope="col">Faol</th>
@@ -235,7 +337,7 @@
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/myadmin.js"></script>
-    <script src="../hafta-turi/js/hafta-turi.js"></script>
+    <script src="../kurs/js/kurs.js"></script>
 </body>
 
 </html>

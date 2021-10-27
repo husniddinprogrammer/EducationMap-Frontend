@@ -3,6 +3,9 @@ var faolTuriService = {
     getAll: function (success, error) {
         return http.get(faolTuriApi+"/", success, error);
     },
+    getAllSelected: function (success, error) {
+        return http.get(faolTuriApi+"/selected", success, error);
+    },
     getById: function (id, success, error) {
         return http.get(faolTuriApi +"/"+id, success, error);
     },

@@ -3,6 +3,9 @@ var haftaTuriService = {
     getAll: function (success, error) {
         return http.get(haftaTuriApi+"/", success, error);
     },
+    getAllSelected: function (success, error) {
+        return http.get(haftaTuriApi+"/selected", success, error);
+    },
     getById: function (id, success, error) {
         return http.get(haftaTuriApi +"/"+id, success, error);
     },

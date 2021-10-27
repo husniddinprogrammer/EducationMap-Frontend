@@ -264,19 +264,3 @@ function qidirishNomi(){
 /**
  * Qidiruv nomi tugadi
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
